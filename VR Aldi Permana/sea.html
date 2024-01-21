@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://rawcdn.githack.com/elbobo/aframe-gltf-morph-component/07e9b80bd382cc1c19223468d35c453e7c76e9a2/dist/aframe-gltf-morph-component.js"></script>
+</head>
+<body>
+
+  <a-scene>
+
+    <!-- Lingkungan 1 - Underwater -->
+    <a-sky id="underwater" src=".assets/puffer.gif"></a-sky>
+
+    <!-- Objek di Lingkungan 1 -->
+    <a-cylinder id="coral" position="0 1.5 -5" radius="1" height="2" color="orange" cursor-listener></a-cylinder>
+
+    <!-- Lingkungan 2 - Deep Ocean -->
+    <a-sky id="deep-ocean" src="https://images.squarespace-cdn.com/content/v1/5bb9f390da50d330b261fdc8/1615231295778-RDJE1L1L5HCNAWAST0RD/90+copy.jpg" visible="false"></a-sky>
+
+    <!-- Objek di Lingkungan 2 -->
+    <a-sphere id="fish" position="0 1.5 -5" radius="1" color="blue" cursor-listener></a-sphere>
+
+    <!-- Lingkungan 3 - Shipwreck -->
+    <a-sky id="shipwreck" src="https://www.treehugger.com/thmb/naMDGDtEDi7LKbY-b7vD4td-D1o=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-995959698-8937364761a9496db25c1c38502e6494.jpg" visible="false"></a-sky>
+
+    <!-- Objek di Lingkungan 3 -->
+    <a-box id="treasure" position="0 1.5 -5" width="1" height="1" depth="1" color="gold" cursor-listener></a-box>
+
+    <!-- Kamera -->
+    <a-entity camera look-controls wasd-controls position="0 1.5 0"></a-entity>
+
+  </a-scene>
+
+  <script>
+    AFRAME.registerComponent('cursor-listener', {
+      init: function () {
+        var el = this.el;
+        
+        el.addEventListener('click', function () {
+          var objectId = el.getAttribute('id');
+
+          switch (objectId) {
+            case 'coral':
+              document.getElementById('underwater').setAttribute('visible', 'false');
+              document.getElementById('deep-ocean').setAttribute('visible', 'true');
+              break;
+            case 'fish':
+              document.getElementById('deep-ocean').setAttribute('visible', 'false');
+              document.getElementById('shipwreck').setAttribute('visible', 'true');
+              break;
+            case 'treasure':
+              document.getElementById('shipwreck').setAttribute('visible', 'false');
+              document.getElementById('underwater').setAttribute('visible', 'true');
+              break;
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

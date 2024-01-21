@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+  <script src="https://rawcdn.githack.com/elbobo/aframe-gltf-morph-component/07e9b80bd382cc1c19223468d35c453e7c76e9a2/dist/aframe-gltf-morph-component.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script>
+        AFRAME.registerComponent('navigate-on-click', {
+            schema: {
+                url: { default: '' }
+            },
+
+            init: function () {
+                var data = this.data;
+                var el = this.el;
+
+                el.addEventListener('click', function () {
+                    window.location.href = data.url;
+                });
+            }
+        });        
+    </script>
+</head>
+
+<body>
+  <a-scene>
+    <a-entity id="camera" camera="userHeight: 1.6" look-controls cursor="rayOrigin: mouse"></a-entity>
+    <a-assets>
+      <img id="laut" src="./assets/puffer.gif">
+    </a-assets>
+    <a-sky src="#laut" rotation="0 -90 0"></a-sky>
+    <a-assets>
+      <a-assets>
+        <img id="texture"src="./assets/cruise_ship/textures/Water_Pool_Light_baseColor.jpeg">
+        <img id="texture1"src="./assets/cruise_ship/textures/Fencing_Mesh_Blue_baseColor.png">
+      </a-assets>
+    </a-assets>
+    <a-entity gltf-model="./assets/cruise_ship/scene.gltf" scale="0.01 0.01 0.01"position="0 -50 0>
+      <a-entity
+          material="src: #texture"
+          gltf-part="body">
+      </a-entity>
+      <a-entity
+          material="src: #texture1"
+          gltf-part="mon">
+      </a-entity>
+  </a-entity>
+    <a-sphere scale="0.5 0.5 0.5" position="-2 -2 -5" radius="1.25" color="#026fc9" shadow
+        event-set__enter="_event: mouseenter; color: #3AB4FF" event-set__leave="_event: mouseleave; color: #026fc9">
+        <a-animation attribute="position" dur="1000" fill="forwards" to="0 2.5 -6" direction="alternate"
+        begin="click"></a-animation>
+    </a-sphere>
+  </a-scene>
+</body>
+
+</html>
